@@ -15,6 +15,7 @@ export class ProductListComponent {
 
   products:Product[] = [];
   currentCategoryId: number = 1;
+  currentCategoryName: string = "";
 
   constructor(private productedService: ProductService, private route: ActivatedRoute){}
 
@@ -29,8 +30,10 @@ export class ProductListComponent {
     const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
     if(hasCategoryId){
         this.currentCategoryId = +this.route.snapshot.paramMap.get('id')!;
+        this.currentCategoryName = this.route.snapshot.paramMap.get('name')!;
     }else{
       this.currentCategoryId = 1;
+      this.currentCategoryName = 'Books';
     }
     this.productedService.getProductList(this.currentCategoryId).subscribe(
       data => { this.products = data; }
